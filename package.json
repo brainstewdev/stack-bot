@@ -2,7 +2,7 @@
   "name": "stack-bot",
   "version": "0.0.1",
   "description": "a discord bot to search errors on stack overflow",
-  "main": "main.js",
+  "main": "src/main.js",
   "dependencies": {
     "envy": "^2.0.0"
   },
