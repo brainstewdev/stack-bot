@@ -4,6 +4,7 @@
   "description": "a discord bot to search errors on stack overflow",
   "main": "src/main.js",
   "dependencies": {
+    "discord.js": "^12.5.3",
     "envy": "^2.0.0"
   },
   "devDependencies": {},
