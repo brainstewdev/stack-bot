@@ -5,7 +5,9 @@
   "main": "src/main.js",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "envy": "^2.0.0"
+    "envy": "^2.0.0",
+    "request": "^2.88.2",
+    "turndown": "^7.1.1"
   },
   "devDependencies": {},
   "scripts": {
