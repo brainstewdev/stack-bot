@@ -110,16 +110,19 @@ function reply_with_answer_2(msg, body, obQuestion){
   
   let obAnswers = parse_response(body);
 	let msg_total_length = 0;
-		let body_string =
+	let body_string = "";
+	try{
+		body_string =
 "# __**question**__:  \n" + turndownService.turndown(obQuestion.items[0].body) + "\n  # __**answer**__:  \n" + turndownService.turndown(obAnswers.items[0].body);
-
-	msg_total_length = body_string.lenght; 
-	console.log("body: \n" + body_string);
-	console.log("body lenght: \n" + msg_total_lenght);
+	}catch(error){
+		console.log(error);
+    		msg.reply("couldn't find any answer related to your problem.");
+	}
+	msg_total_length = body_string.length; 
 	if(msg_total_length < 4000){
   try{
     let repEmbed = new Discord.MessageEmbed()
-        .setColor('#0099ff')
+        .setColor('#f48024')
         .setTitle(turndownService.turndown(obQuestion.items[0].title))
         .setURL(obQuestion.items[0].link)
         .setAuthor(obQuestion.items[0].owner.display_name, obQuestion.items[0].owner.profile_image, obQuestion.items[0].owner.link)
@@ -134,8 +137,16 @@ function reply_with_answer_2(msg, body, obQuestion){
     console.log(error);
   }
 	}else{
-		msg.reply(body_string);
-	}
+		try{
+		msg.reply(
+			body_string
+
+		, {split: true});
+		}catch(error){
+			
+    msg.reply("couldn't find any answer related to your problem.");
+		}
+		}
 }
 
 function parse_response(body){
