@@ -119,7 +119,7 @@ function reply_with_answer_2(msg, body, obQuestion){
     		msg.reply("couldn't find any answer related to your problem.");
 	}
 	msg_total_length = body_string.length; 
-	if(msg_total_length < 4000){
+	if(msg_total_length < 2000){
   try{
     let repEmbed = new Discord.MessageEmbed()
         .setColor('#f48024')
