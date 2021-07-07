@@ -88,6 +88,7 @@ function reply_with_answer(msg, body){
     try{
     // should answer with: question \n answer
     // i have to get the most voted answer by the question id
+	console.log(ob.items[0].question_id);
     let url = "https://api.stackexchange.com/2.3/questions/"+ ob.items[0].question_id + "/answers?order=desc&sort=votes&site=stackoverflow&filter=!nKzQURF6Y5";
     // get the first answer
     request(url, { encoding: null }, function (err, response, body) {
@@ -108,13 +109,21 @@ function reply_with_answer(msg, body){
 function reply_with_answer_2(msg, body, obQuestion){
   
   let obAnswers = parse_response(body);
+	let msg_total_length = 0;
+		let body_string =
+"# __**question**__:  \n" + turndownService.turndown(obQuestion.items[0].body) + "\n  # __**answer**__:  \n" + turndownService.turndown(obAnswers.items[0].body);
+
+	msg_total_length = body_string.lenght; 
+	console.log("body: \n" + body_string);
+	console.log("body lenght: \n" + msg_total_lenght);
+	if(msg_total_length < 4000){
   try{
     let repEmbed = new Discord.MessageEmbed()
         .setColor('#0099ff')
         .setTitle(turndownService.turndown(obQuestion.items[0].title))
         .setURL(obQuestion.items[0].link)
         .setAuthor(obQuestion.items[0].owner.display_name, obQuestion.items[0].owner.profile_image, obQuestion.items[0].owner.link)
-        .setDescription("# __**question**__:  \n" + turndownService.turndown(obQuestion.items[0].body) + "\n  # __**answer**__:  \n" + turndownService.turndown(obAnswers.items[0].body))
+        .setDescription(body_string)
         .attachFiles(['./img/logo.png'])
         .setThumbnail('attachment://logo.png')
         .setTimestamp()
@@ -124,6 +133,9 @@ function reply_with_answer_2(msg, body, obQuestion){
     msg.reply("couldn't find any answer related to your problem.");
     console.log(error);
   }
+	}else{
+		msg.reply(body_string);
+	}
 }
 
 function parse_response(body){
